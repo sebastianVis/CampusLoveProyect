@@ -1,0 +1,1 @@
+INSERT INTO tipo_interaccion(interaccion) VALUES ("LIKE"), ("DISLIKE");
