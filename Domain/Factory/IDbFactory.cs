@@ -11,4 +11,7 @@ public interface IDbFactory
 {
     IUserRepository CreateUserRepository();
     IEstadisticasRepository CreateEstadisticasRepository();
+    ISesionRepository CreateSesionRepository();
+    ICarreraRepository CreateCarreraRepository();
+    IInteresesRepository CreateInteresRepository();
 }

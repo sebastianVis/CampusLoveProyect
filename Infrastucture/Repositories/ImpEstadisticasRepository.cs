@@ -21,11 +21,29 @@ public class ImpEstadisticasRepository : IGenericRepository<Usuario>, IEstadisti
     public void VerEstadisticas(Usuario entity)
     {
         var connection = _conexion.ObtenerConexion();
-        string query = "SELECT likes_recibidos, dislikes_recibidos, total_matches FROM estadisticas WHERE id_registro = @id;";
+        string query = "SELECT likes_recibidos, dislikes_recibidos, total_matches FROM estadisticas WHERE id_usuario = @id;";
         using var cmd = new NpgsqlCommand(query, connection);
         cmd.Parameters.AddWithValue("@id", entity.IdUsuario);
-    }
+        Estadisticas estadisticas;
+        using var reader = cmd.ExecuteReader();
+        if (reader.Read())
+        {
+            estadisticas = new Estadisticas
+            {
+                LikesRecibidos = reader.GetInt32(0),
+                DislikesRecibidos = reader.GetInt32(1),
+                TotalMatches = reader.GetInt32(2)
+            };
+            Console.Write("👍 Likes recibidos: ");
+            Console.WriteLine(estadisticas.LikesRecibidos);
 
+            Console.Write("👎 Dislikes recibidos: ");
+            Console.WriteLine(estadisticas.DislikesRecibidos);
+
+            Console.Write("💘 Total Matches: ");
+            Console.WriteLine(estadisticas.TotalMatches);
+        }
+    }
     public void Crear(Usuario entity)
     {
         var connection = _conexion.ObtenerConexion();
@@ -37,7 +55,7 @@ public class ImpEstadisticasRepository : IGenericRepository<Usuario>, IEstadisti
         cmd.ExecuteNonQuery();
     }
 
-    public void Actualizar(Usuario entity, int likes)
+    public void ActualizarLikes(Usuario entity, int likes)
     {
         var connection = _conexion.ObtenerConexion();
         DateTime actualizacion = DateTime.Now;

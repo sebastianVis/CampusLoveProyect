@@ -26,4 +26,18 @@ public class PostgresDbFactory : IDbFactory
     {
         return new ImpEstadisticasRepository(_connectionString);
     }
+
+    public ISesionRepository CreateSesionRepository()
+    {
+        return new ImpSesionRepository(_connectionString);
+    }
+
+    public ICarreraRepository CreateCarreraRepository()
+    {
+        return new ImpCarreraRepository(_connectionString);
+    }
+    public IInteresesRepository CreateInteresRepository()
+    {
+        return new ImpInteresesRepository(_connectionString);
+    }
 }

@@ -11,7 +11,7 @@ public class UiMainMenu
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("\n--CAMPUS LOVE --\n\n");
+            Console.WriteLine("\n\t\t--CAMPUS LOVE --\n\n");
             Console.WriteLine("\t1. Iniciar sesión\n\t2. Registrar usuario\n\t0. Salir");
             Console.Write("\nOpción: ");
             ConsoleKeyInfo keyPressed = Console.ReadKey();
