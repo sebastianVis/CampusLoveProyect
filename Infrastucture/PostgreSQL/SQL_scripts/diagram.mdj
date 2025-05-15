@@ -2847,7 +2847,8 @@
 							},
 							"name": "id_genero",
 							"type": "SERIAL",
-							"length": 0
+							"length": 0,
+							"foreignKey": true
 						}
 					]
 				},

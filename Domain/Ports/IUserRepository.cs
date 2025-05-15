@@ -8,5 +8,7 @@ namespace CampusLove.Domain.Ports;
 
     public interface IUserRepository :IGenericRepository<Usuario>
     {
-        
+        void ActualizarLogin(Usuario entity); 
+        bool ObtenerLogin(Usuario entity);
+        Usuario ObtenerId(Usuario entity);
     }

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 namespace CampusLove.Infrastucture.PostgreSQL.SQL_scripts;
 public class DbParameters
 {
-    public static string Parameters = "Host=127.0.0.1;Port=5432;Database=sgi_app;Username=postgres;Password=12345;";
+    public static string Parameters = "Host=127.0.0.1;Port=5432;Database=campuslove;Username=postgres;Password=12345;";
 }
