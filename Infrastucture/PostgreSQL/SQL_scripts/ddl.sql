@@ -18,24 +18,24 @@ DROP TABLE IF EXISTS usuario_carrera;
 -- Tabla genero
 CREATE TABLE login (
     id_usuario SERIAL PRIMARY KEY,
-    username VARCHAR(20),
+    username VARCHAR(20) UNIQUE,
     password VARCHAR(40)
 );
 
 CREATE TABLE genero (
     id_genero SERIAL PRIMARY KEY,
-    nombre VARCHAR(20)
+    nombre VARCHAR(20) UNIQUE
 );
 
 -- Tabla intereses
 CREATE TABLE intereses (
     id_interes SERIAL PRIMARY KEY,
-    nombre VARCHAR(20)
+    nombre VARCHAR(20) UNIQUE
 );
 
 CREATE TABLE carrera (
     id_carrera SERIAL PRIMARY KEY,
-    nombre VARCHAR(50)
+    nombre VARCHAR(50) UNIQUE
 );
 
 -- Tabla usuarios
@@ -109,5 +109,5 @@ CREATE TABLE estadisticas (
     likes_recibidos SMALLINT,
     dislikes_recibidos SMALLINT,
     total_matches SMALLINT,
-    ultima_actualizacion TIMESTAMP
+    ultima_actualizacion TIMESTAMP DEFAULT
 );

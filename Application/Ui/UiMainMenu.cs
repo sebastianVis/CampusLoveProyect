@@ -21,6 +21,7 @@ public class UiMainMenu
                     UiLogin.MenuLogin();
                     break;
                 case '2':
+                    UiRegistro.MenuRegistro();
                     break;
                 case '0':
                     Environment.Exit(0);
