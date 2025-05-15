@@ -9,4 +9,6 @@ namespace CampusLove.Domain.Ports;
 public interface IEstadisticasRepository : IGenericRepository<Usuario>
 {
     void VerEstadisticas(Usuario usuario);
+    void ActualizarLikes(Usuario usuario, int likes);
+    void ActualizarDislikes(Usuario usuario, int likes);
 }

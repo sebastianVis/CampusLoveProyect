@@ -15,6 +15,7 @@ public class UiLogin
     {
         IDbFactory factory = new PostgresDbFactory(DbParameters.Parameters);
         var servicioUsuario = new UsuarioService(factory.CreateUserRepository());
+        var servicioEstadisticas = new EstadisticasService(factory.CreateEstadisticasRepository());
 
         while (true)
         {

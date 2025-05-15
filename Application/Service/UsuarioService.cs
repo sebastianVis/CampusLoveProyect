@@ -61,4 +61,14 @@ public class UsuarioService
     {
         return _repo.ObtenerId(usuario);
     }
+
+    public Usuario ObtenerId(Usuario entity)
+    {
+        return _repo.ObtenerId(entity);
+    }
+
+    // public void IniciarTinder(int id)
+    // {
+    //     return _repo.TinderIniciar(id);
+    // }
 }

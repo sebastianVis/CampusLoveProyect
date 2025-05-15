@@ -17,6 +17,8 @@ public class UiRegistro
     {
         IDbFactory factory = new PostgresDbFactory(DbParameters.Parameters);
         var servicioUsuario = new UsuarioService(factory.CreateUserRepository());
+        var servicioEstadisticas = new EstadisticasService(factory.CreateEstadisticasRepository());
+        var SesionService = new SesionService(factory.CreateSesionRepository());
         while (true)
         {
             Console.Clear();
@@ -38,7 +40,6 @@ public class UiRegistro
                         Console.Clear();
                         Usuario usuario = new Usuario();
 
-                        // Username
                         while (true)
                         {
                             Console.Write("\n👤 Username: ");
@@ -48,7 +49,6 @@ public class UiRegistro
                             Console.WriteLine("❌ El nombre de usuario debe tener al menos 3 caracteres.");
                         }
 
-                        // Contraseña
                         while (true)
                         {
                             Console.Write("\n🔒 Contraseña: ");
@@ -58,7 +58,6 @@ public class UiRegistro
                             Console.WriteLine("❌ La contraseña debe tener al menos 6 caracteres.");
                         }
 
-                        // Nombre
                         while (true)
                         {
                             Console.Write("\n📛 Nombre: ");
@@ -68,7 +67,6 @@ public class UiRegistro
                             Console.WriteLine("❌ El nombre no puede estar vacío.");
                         }
 
-                        // Edad
                         while (true)
                         {
                             Console.Write("\n🎂 Edad: ");
@@ -81,11 +79,9 @@ public class UiRegistro
                             Console.WriteLine("❌ Ingrese una edad válida entre 0 y 120.");
                         }
 
-                        // Frase del perfil
                         Console.Write("\n💬 Frase del perfil: ");
                         usuario.FrasePerfil = Console.ReadLine()?.Trim();
 
-                        // Género
                         while (true)
                         {
                             Console.Write("\n⚧️ Género:\n1. Masculino\t2. Femenino\nIngrese una opción (1 o 2): ");
@@ -98,8 +94,9 @@ public class UiRegistro
                             Console.WriteLine("❌ Selección no válida. Ingrese 1 o 2.");
                         }
 
-                        // Registro
                         servicioUsuario.CrearUsuario(usuario);
+                        Usuario newUser = servicioUsuario.ObtenerId(usuario);
+                        servicioEstadisticas.CrearEntidad(newUser);
                         Console.WriteLine("\n✅ Usuario registrado correctamente.");
                         Console.WriteLine("\nPresione Enter para volver al menú.");
                         Console.ReadKey();

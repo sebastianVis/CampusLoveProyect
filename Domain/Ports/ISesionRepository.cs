@@ -8,4 +8,5 @@ namespace CampusLove.Domain.Ports;
 public interface ISesionRepository
 {
     void AbrirSesion(int id);
+    void CerrarSesion(int id);
 }
