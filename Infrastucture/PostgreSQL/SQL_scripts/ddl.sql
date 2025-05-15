@@ -109,5 +109,5 @@ CREATE TABLE estadisticas (
     likes_recibidos SMALLINT,
     dislikes_recibidos SMALLINT,
     total_matches SMALLINT,
-    ultima_actualizacion TIMESTAMP
+    ultima_actualizacion TIMESTAMP DEFAULT
 );

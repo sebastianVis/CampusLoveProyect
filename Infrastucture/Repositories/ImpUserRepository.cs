@@ -98,6 +98,9 @@ public class ImpUserRepository : IGenericRepository<Usuario>, IUserRepository
         var connection = _conexion.ObtenerConexion();
         string query = "SELECT u.id_usuario, u.nombre, u.edad FROM login l INNER JOIN usuarios u ON l.id_usuario = u.id_usuario WHERE username = @username AND password = @password;";
         using var cmd = new NpgsqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@username", entity.Username!);
+        cmd.Parameters.AddWithValue("@password", entity.Password!);
+
         using var reader = cmd.ExecuteReader();
         if (reader.Read())
         {

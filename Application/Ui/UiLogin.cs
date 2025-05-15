@@ -23,6 +23,8 @@ public class UiLogin
             if (servicioUsuario.ObtenerLogin(usuario))
             {
                 Console.WriteLine("\n✅ Inicio de sesión exitoso.");
+                Usuario newUsuario = servicioUsuario.ObtenerUsuario(usuario);
+                UiMenu.MenuStart(newUsuario);
                 break;
             }
             else
@@ -30,13 +32,15 @@ public class UiLogin
                 Console.WriteLine("\n❌ Usuario o contraseña incorrectos. Intente nuevamente.\n");
                 Thread.Sleep(1500);
                 Console.Clear();
+                Ui.UiMainMenu.MainMenu();
+                break;
             }
         }
     }
 
     private static Usuario SolicitarCredenciales()
     {
-        var usuario = new Usuario();
+        Usuario usuario = new Usuario();
 
         Console.WriteLine("\n-- Iniciar sesión --\n");
 
@@ -45,7 +49,7 @@ public class UiLogin
 
         Console.Write("Contraseña: ");
         usuario.Password = Console.ReadLine();
-
         return usuario;
+        
     }
 }

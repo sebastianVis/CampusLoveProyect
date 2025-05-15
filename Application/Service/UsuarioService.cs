@@ -8,6 +8,7 @@ using CampusLove.Domain.Entities;
 using CampusLove.Domain.Ports;
 
 namespace CampusLove.Application.Service;
+
 public class UsuarioService
 {
     private readonly IUserRepository _repo;
@@ -22,9 +23,11 @@ public class UsuarioService
     public void ObtenerUsuarios()
     {
         var lista = _repo.Obtener();
-        foreach(var a in lista){
+        foreach (var a in lista)
+        {
             string genero = "";
-            switch(a.IdGenero){
+            switch (a.IdGenero)
+            {
                 case 1:
                     genero = "Masculino";
                     return;
@@ -35,18 +38,27 @@ public class UsuarioService
             Console.WriteLine($"Id: {a.IdUsuario}, Nombre: {a.Nombre}, Edad: {a.Edad}, \nGenero: {genero}");
         }
     }
-    public void EliminarUsuario(int idUser){
+    public void EliminarUsuario(int idUser)
+    {
         _repo.Eliminar(idUser);
     }
-    public void EditarUsuario(Usuario usuario){
+    public void EditarUsuario(Usuario usuario)
+    {
         _repo.Actualizar(usuario);
     }
 
-    public void EditarLogin(Usuario usuario){
+    public void EditarLogin(Usuario usuario)
+    {
         _repo.ActualizarLogin(usuario);
     }
 
-    public bool ObtenerLogin(Usuario usuario) {
-    return _repo.ObtenerLogin(usuario);
+    public bool ObtenerLogin(Usuario usuario)
+    {
+        return _repo.ObtenerLogin(usuario);
+    }
+
+    public Usuario ObtenerUsuario(Usuario usuario)
+    {
+        return _repo.ObtenerId(usuario);
     }
 }

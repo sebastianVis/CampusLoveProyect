@@ -10,6 +10,7 @@ using CampusLove.Infrastucture.PostgreSQL;
 using CampusLove.Infrastucture.PostgreSQL.SQL_scripts;
 
 namespace CampusLove.Application.Ui;
+
 public class UiRegistro
 {
     public static void MenuRegistro()
@@ -36,21 +37,73 @@ public class UiRegistro
                     case '2':
                         Console.Clear();
                         Usuario usuario = new Usuario();
-                        Console.Write("\nUsername: ");
-                        usuario.Username = Console.ReadLine();
-                        Console.Write("\nContraseña: ");
-                        usuario.Password = Console.ReadLine();
-                        Console.Write("\nNombre: ");
-                        usuario.Nombre = Console.ReadLine();
-                        Console.Write("\nEdad: ");
-                        usuario.Edad = int.Parse(Console.ReadLine()!);
-                        Console.Write("\nFrase del perfil: ");
-                        usuario.FrasePerfil = Console.ReadLine();
-                        Console.Write("\nGeneros:\n1. Masculino\t2. Femenino\nIngrese genero: ");
-                        usuario.IdGenero = int.Parse(Console.ReadLine()!);
+
+                        // Username
+                        while (true)
+                        {
+                            Console.Write("\n👤 Username: ");
+                            usuario.Username = Console.ReadLine()?.Trim();
+                            if (!string.IsNullOrWhiteSpace(usuario.Username) && usuario.Username.Length >= 3)
+                                break;
+                            Console.WriteLine("❌ El nombre de usuario debe tener al menos 3 caracteres.");
+                        }
+
+                        // Contraseña
+                        while (true)
+                        {
+                            Console.Write("\n🔒 Contraseña: ");
+                            usuario.Password = Console.ReadLine();
+                            if (!string.IsNullOrWhiteSpace(usuario.Password) && usuario.Password.Length >= 6)
+                                break;
+                            Console.WriteLine("❌ La contraseña debe tener al menos 6 caracteres.");
+                        }
+
+                        // Nombre
+                        while (true)
+                        {
+                            Console.Write("\n📛 Nombre: ");
+                            usuario.Nombre = Console.ReadLine()?.Trim();
+                            if (!string.IsNullOrWhiteSpace(usuario.Nombre))
+                                break;
+                            Console.WriteLine("❌ El nombre no puede estar vacío.");
+                        }
+
+                        // Edad
+                        while (true)
+                        {
+                            Console.Write("\n🎂 Edad: ");
+                            string? edadInput = Console.ReadLine();
+                            if (int.TryParse(edadInput, out int edad) && edad >= 0 && edad <= 120)
+                            {
+                                usuario.Edad = edad;
+                                break;
+                            }
+                            Console.WriteLine("❌ Ingrese una edad válida entre 0 y 120.");
+                        }
+
+                        // Frase del perfil
+                        Console.Write("\n💬 Frase del perfil: ");
+                        usuario.FrasePerfil = Console.ReadLine()?.Trim();
+
+                        // Género
+                        while (true)
+                        {
+                            Console.Write("\n⚧️ Género:\n1. Masculino\t2. Femenino\nIngrese una opción (1 o 2): ");
+                            string? generoInput = Console.ReadLine();
+                            if (int.TryParse(generoInput, out int genero) && (genero == 1 || genero == 2))
+                            {
+                                usuario.IdGenero = genero;
+                                break;
+                            }
+                            Console.WriteLine("❌ Selección no válida. Ingrese 1 o 2.");
+                        }
+
+                        // Registro
                         servicioUsuario.CrearUsuario(usuario);
-                        Console.WriteLine("Presione Enter para volver al menú.");
+                        Console.WriteLine("\n✅ Usuario registrado correctamente.");
+                        Console.WriteLine("\nPresione Enter para volver al menú.");
                         Console.ReadKey();
+
                         return;
                     case '0':
                         return;
