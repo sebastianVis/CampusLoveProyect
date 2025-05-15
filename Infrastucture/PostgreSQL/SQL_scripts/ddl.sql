@@ -15,7 +15,6 @@ DROP TABLE IF EXISTS carrera;
 DROP TABLE IF EXISTS usuario_carrera;
 
 
--- Tabla genero
 CREATE TABLE login (
     id_usuario SERIAL PRIMARY KEY,
     username VARCHAR(20) UNIQUE,
@@ -27,7 +26,6 @@ CREATE TABLE genero (
     nombre VARCHAR(20) UNIQUE
 );
 
--- Tabla intereses
 CREATE TABLE intereses (
     id_interes SERIAL PRIMARY KEY,
     nombre VARCHAR(20) UNIQUE
@@ -57,14 +55,12 @@ CREATE TABLE usuario_carrera(
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
--- Tabla usuario_interes (relación muchos a muchos)
 CREATE TABLE usuario_interes (
     id_usuario INTEGER REFERENCES usuarios(id_usuario),
     id_interes INTEGER REFERENCES intereses(id_interes),
     PRIMARY KEY (id_usuario, id_interes)
 );
 
--- Tabla sesiones_usuario
 CREATE TABLE sesiones_usuario (
     id_sesion SERIAL PRIMARY KEY,
     id_usuario SERIAL REFERENCES login(id_usuario),
@@ -72,13 +68,12 @@ CREATE TABLE sesiones_usuario (
     fecha_fin TIMESTAMP
 );
 
--- Tabla tipo_interaccion
+
 CREATE TABLE tipo_interaccion (
     id_tipo_interaccion SERIAL PRIMARY KEY,
     interaccion VARCHAR(10)
 );
 
--- Tabla interacciones
 CREATE TABLE interacciones (
     id_interaccion SERIAL PRIMARY KEY,
     id_usuario_emisor INTEGER REFERENCES usuarios(id_usuario),
