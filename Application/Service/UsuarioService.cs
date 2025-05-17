@@ -43,7 +43,7 @@ public class UsuarioService
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Nombre: ");
             Console.ForegroundColor = ConsoleColor.White;
-            // Limitar la longitud del nombre si es muy largo
+
             string nombreMostrado = a.Nombre?.PadRight(15) ?? "".PadRight(15);
             Console.Write(nombreMostrado);
 
@@ -57,7 +57,6 @@ public class UsuarioService
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(genero);
 
-            // Restaurar color por defecto
             Console.ForegroundColor = ConsoleColor.White;
         }
     }

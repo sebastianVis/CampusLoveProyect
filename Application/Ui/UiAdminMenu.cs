@@ -81,7 +81,7 @@ namespace CampusLove.Application.Ui
                         UiCarrera.MenuCarrera();
                         break;
                     case '2':
-                        UiCarrera.MenuCarrera();
+                        UiUsuario.MenuUsuario();
                         break;
                     case '3':
                         UiInteres.MenuInteres();
