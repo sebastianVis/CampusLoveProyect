@@ -25,7 +25,7 @@ public class UsuarioService
         var lista = _repo.Obtener();
         foreach (var a in lista)
         {
-            string genero = "";
+            string genero = "nadota";
             switch (a.IdGenero)
             {
                 case 1:
@@ -35,7 +35,30 @@ public class UsuarioService
                     genero = "Femenino";
                     break;
             }
-            Console.WriteLine($"Id: {a.IdUsuario}, Nombre: {a.Nombre}, Edad: {a.Edad}, \nGenero: {genero}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("ID: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(a.IdUsuario.ToString().PadRight(4));
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("Nombre: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            // Limitar la longitud del nombre si es muy largo
+            string nombreMostrado = a.Nombre?.PadRight(15) ?? "".PadRight(15);
+            Console.Write(nombreMostrado);
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("Edad: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(a.Edad.ToString()!.PadRight(3));
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("Género: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(genero);
+
+            // Restaurar color por defecto
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
     public void EliminarUsuario(int idUser)
@@ -70,20 +93,20 @@ public class UsuarioService
     public List<Usuario> ObtenerUsuariosTinder()
     {
         var lista = _repo.Obtener();
-    foreach (var a in lista)
-    {
-        string genero = "";
-        switch (a.IdGenero)
+        foreach (var a in lista)
         {
-            case 1:
-                genero = "Masculino";
-                break;
-            case 2:
-                genero = "Femenino";
-                break;
+            string genero = "";
+            switch (a.IdGenero)
+            {
+                case 1:
+                    genero = "Masculino";
+                    break;
+                case 2:
+                    genero = "Femenino";
+                    break;
+            }
+            Console.WriteLine($"Id: {a.IdUsuario}, Nombre: {a.Nombre}, Edad: {a.Edad}, Genero: {genero}");
         }
-        Console.WriteLine($"Id: {a.IdUsuario}, Nombre: {a.Nombre}, Edad: {a.Edad}, \nGenero: {genero}");
-    }
-    return lista;
+        return lista;
     }
 }

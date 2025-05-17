@@ -89,6 +89,7 @@ public class ImpUserRepository : IGenericRepository<Usuario>, IUserRepository
                 Nombre = reader.GetString(1),
                 Edad = reader.GetInt32(2),
                 FrasePerfil = reader.GetString(3),
+                IdGenero = reader.GetInt32(4)
             });
         }
         return UsuarioList;
@@ -97,7 +98,7 @@ public class ImpUserRepository : IGenericRepository<Usuario>, IUserRepository
     public Usuario ObtenerId(Usuario entity)
     {
         var connection = _conexion.ObtenerConexion();
-        string query = "SELECT u.id_usuario, u.nombre, u.edad FROM login l INNER JOIN usuarios u ON l.id_usuario = u.id_usuario WHERE username = @username AND password = @password;";
+        string query = "SELECT u.id_usuario, u.nombre, u.edad, u.id_genero FROM login l INNER JOIN usuarios u ON l.id_usuario = u.id_usuario WHERE username = @username AND password = @password;";
         using var cmd = new NpgsqlCommand(query, connection);
         cmd.Parameters.AddWithValue("@username", entity.Username!);
         cmd.Parameters.AddWithValue("@password", entity.Password!);
@@ -107,9 +108,10 @@ public class ImpUserRepository : IGenericRepository<Usuario>, IUserRepository
         {
             var usuario = new Usuario
             {
-                IdUsuario = reader.GetInt32(reader.GetOrdinal("id_usuario")),
-                Nombre = reader.GetString(reader.GetOrdinal("nombre")),
-                Edad = reader.GetInt32(reader.GetOrdinal("edad")),
+                IdUsuario = reader.GetInt32(0),
+                Nombre = reader.GetString(1),
+                Edad = reader.GetInt32(2),
+                IdGenero = reader.GetInt32(3)
             };
 
             return usuario;

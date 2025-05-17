@@ -34,14 +34,62 @@ public class ImpEstadisticasRepository : IGenericRepository<Usuario>, IEstadisti
                 DislikesRecibidos = reader.GetInt32(1),
                 TotalMatches = reader.GetInt32(2)
             };
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.Black;
+
+            // Cabecera
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("    ╔═══════════════════════════════════════════════════════╗");
+
+            string titulo = $"ESTADÍSTICAS DE {entity.Nombre!.ToUpper()}";
+            int espaciosTitulo = (49 - titulo.Length) / 2;
+            Console.Write($"    ║{new string(' ', espaciosTitulo)}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(titulo);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine($"{new string(' ', 49 - titulo.Length - espaciosTitulo)}║");
+
+            Console.WriteLine("    ╚═══════════════════════════════════════════════════════╝");
+
+            // Contenedor principal
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("    ╔═══════════════════════════════════════════════════════╗");
+
+            // Sección de estadísticas
+            Console.WriteLine("    ║                                                       ║");
+
+            // Likes recibidos
+            Console.Write("    ║     ");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("👍 Likes recibidos: ");
-            Console.WriteLine(estadisticas.LikesRecibidos);
+            Console.ForegroundColor = ConsoleColor.White;
+            string likesText = estadisticas.LikesRecibidos.ToString();
+            Console.Write(likesText);
+            Console.WriteLine(new string(' ', 33 - likesText.Length) + "║");
 
+            Console.WriteLine("    ║                                                       ║");
+
+            // Dislikes recibidos
+            Console.Write("    ║     ");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("👎 Dislikes recibidos: ");
-            Console.WriteLine(estadisticas.DislikesRecibidos);
+            Console.ForegroundColor = ConsoleColor.White;
+            string dislikesText = estadisticas.DislikesRecibidos.ToString();
+            Console.Write(dislikesText);
+            Console.WriteLine(new string(' ', 30 - dislikesText.Length) + "║");
 
+            Console.WriteLine("    ║                                                       ║");
+
+            // Total Matches
+            Console.Write("    ║     ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write("💘 Total Matches: ");
-            Console.WriteLine(estadisticas.TotalMatches);
+            Console.ForegroundColor = ConsoleColor.White;
+            string matchesText = estadisticas.TotalMatches.ToString();
+            Console.Write(matchesText);
+            Console.WriteLine(new string(' ', 34 - matchesText.Length) + "║");
+            Console.WriteLine("    ║                                                       ║");
+            Console.WriteLine("    ╚═══════════════════════════════════════════════════════╝");
         }
     }
     public void Crear(Usuario entity)
@@ -86,17 +134,17 @@ public class ImpEstadisticasRepository : IGenericRepository<Usuario>, IEstadisti
         cmd.Parameters.AddWithValue("@id", id);
         cmd.ExecuteNonQuery();
     }
-    
+
     public bool VerificarLike(int idUsuarioActual, int idUsuarioDestino)
-{
-    var connection = _conexion.ObtenerConexion();
-    string query = "SELECT COUNT(*) FROM interacciones i INNER JOIN tipo_interaccion t ON i.id_tipo_interaccion = t.id_tipo_interaccion WHERE i.id_usuario_emisor = @idOrigen AND i.id_usuario_receptor = @idDestino AND t.interaccion = 'LIKE'";
-    using var cmd = new NpgsqlCommand(query, connection);
-    cmd.Parameters.AddWithValue("@idOrigen", idUsuarioActual);
-    cmd.Parameters.AddWithValue("@idDestino", idUsuarioDestino);
-    int count = Convert.ToInt32(cmd.ExecuteScalar());
-    return count > 0;
-}
+    {
+        var connection = _conexion.ObtenerConexion();
+        string query = "SELECT COUNT(*) FROM interacciones i INNER JOIN tipo_interaccion t ON i.id_tipo_interaccion = t.id_tipo_interaccion WHERE i.id_usuario_emisor = @idOrigen AND i.id_usuario_receptor = @idDestino AND t.interaccion = 'LIKE'";
+        using var cmd = new NpgsqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@idOrigen", idUsuarioActual);
+        cmd.Parameters.AddWithValue("@idDestino", idUsuarioDestino);
+        int count = Convert.ToInt32(cmd.ExecuteScalar());
+        return count > 0;
+    }
     public List<Usuario> Obtener()
     {
         throw new NotImplementedException();

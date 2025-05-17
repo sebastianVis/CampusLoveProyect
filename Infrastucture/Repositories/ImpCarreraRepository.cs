@@ -63,4 +63,14 @@ public class ImpCarreraRepository : IGenericRepository<Carrera>, ICarreraReposit
         cmd.Parameters.AddWithValue("@id", id);
         cmd.ExecuteNonQuery();
     }
+
+    public void AgregarCarrera(Usuario usuario, int id)
+    {
+        var connection = _conexion.ObtenerConexion();
+        string query = "INSERT INTO usuario_carrera(id_carrera, id_usuario) VALUES (@id, @idusuario)";
+        using var cmd = new NpgsqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@idusuario", usuario.IdUsuario!);
+        cmd.Parameters.AddWithValue("@id", id);
+        cmd.ExecuteNonQuery();
+    }
 }
