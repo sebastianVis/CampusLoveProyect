@@ -55,6 +55,12 @@ public class UiMainMenu
         Console.WriteLine("  Registrar nuevo usuario                                ║");
 
         Console.Write("    ║  ");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.Write("3.");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine("  Admin                                                  ║");
+
+        Console.Write("    ║  ");
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Write("0.");
         Console.ForegroundColor = ConsoleColor.White;
@@ -89,6 +95,9 @@ public class UiMainMenu
                     break;
                 case '2':
                     UiRegistro.MenuRegistro();
+                    break;
+                case '3':
+                    UiAdminMenu.MenuAdmin();
                     break;
                 case '0':
                     Environment.Exit(0);

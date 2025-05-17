@@ -48,7 +48,7 @@ namespace CampusLove.Infrastucture.Repositories
         public void Actualizar(Intereses entity)
         {
             var connection = _conexion.ObtenerConexion();
-            string query = "UPDATE FROM intereses SET nombre = @nombre WHERE id = @id";
+            string query = "UPDATE intereses SET nombre = @nombre WHERE id_interes = @id";
             using var cmd = new NpgsqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@nombre", entity.Nombre!);
             cmd.Parameters.AddWithValue("@id", entity.IdInteres!);
@@ -58,7 +58,7 @@ namespace CampusLove.Infrastucture.Repositories
         public void Eliminar(int id)
         {
             var connection = _conexion.ObtenerConexion();
-            string query = "DELETE FROM intereses WHERE id = @id";
+            string query = "DELETE FROM intereses WHERE id_interes = @id";
             using var cmd = new NpgsqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@id", id);
             cmd.ExecuteNonQuery();

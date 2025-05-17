@@ -48,7 +48,7 @@ public class ImpCarreraRepository : IGenericRepository<Carrera>, ICarreraReposit
     public void Actualizar(Carrera entity)
     {
         var connection = _conexion.ObtenerConexion();
-        string query = "UPDATE FROM carrera SET nombre = @nombre WHERE id = @id";
+        string query = "UPDATE FROM carrera SET nombre = @nombre WHERE id_carrera = @id";
         using var cmd = new NpgsqlCommand(query, connection);
         cmd.Parameters.AddWithValue("@nombre", entity.Nombre!);
         cmd.Parameters.AddWithValue("@id", entity.IdCarrera!);
@@ -58,7 +58,7 @@ public class ImpCarreraRepository : IGenericRepository<Carrera>, ICarreraReposit
     public void Eliminar(int id)
     {
         var connection = _conexion.ObtenerConexion();
-        string query = "DELETE FROM carrera WHERE id = @id";
+        string query = "DELETE FROM carrera WHERE id_carrera = @id";
         using var cmd = new NpgsqlCommand(query, connection);
         cmd.Parameters.AddWithValue("@id", id);
         cmd.ExecuteNonQuery();
