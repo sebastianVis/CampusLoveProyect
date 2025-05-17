@@ -22,9 +22,72 @@ public class UiRegistro
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("\n-- Registrar Usuario --\n\n");
-            Console.WriteLine("\t1. Ver Usuarios\n\t2. Registrar usuario\n\t0. Salir");
-            Console.Write("\nOpción: ");
+            // Configura el color de fondo y texto para mejor apariencia
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Magenta;
+
+            Console.WriteLine(@"
+    ╔═══════════════════════════════════════════════════════════════════╗
+    ║                                                                   ║
+    ║    ██████╗ ███████╗ ██████╗ ██╗███████╗████████╗██████╗  ██████╗  ║
+    ║    ██╔══██╗██╔════╝██╔════╝ ██║██╔════╝╚══██╔══╝██╔══██╗██╔═══██╗ ║
+    ║    ██████╔╝█████╗  ██║  ███╗██║███████╗   ██║   ██████╔╝██║   ██║ ║
+    ║    ██╔══██╗██╔══╝  ██║   ██║██║╚════██║   ██║   ██╔══██╗██║   ██║ ║
+    ║    ██║  ██║███████╗╚██████╔╝██║███████║   ██║   ██║  ██║╚██████╔╝ ║
+    ║    ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝  ║
+    ║                                                                   ║
+    ║            ██╗   ██╗███████╗██╗   ██╗ █████╗ ██████╗ ██╗ ██████╗  ║
+    ║            ██║   ██║██╔════╝██║   ██║██╔══██╗██╔══██╗██║██╔═══██╗ ║
+    ║            ██║   ██║███████╗██║   ██║███████║██████╔╝██║██║   ██║ ║
+    ║            ██║   ██║╚════██║██║   ██║██╔══██║██╔══██╗██║██║   ██║ ║
+    ║            ╚██████╔╝███████║╚██████╔╝██║  ██║██║  ██║██║╚██████╔╝ ║
+    ║             ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝  ║
+    ║                                                                   ║
+    ╚═══════════════════════════════════════════════════════════════════╝");
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\n\t🧩 Gestiona los usuarios de Campus Love 🧩\n");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("    ╔═══════════════════════════════════════════════════════════╗");
+
+            Console.Write("    ║  ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("1.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("  Ver Usuarios Registrados                             ║");
+
+            Console.Write("    ║  ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("2.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("  Registrar Nuevo Usuario                              ║");
+
+            Console.Write("    ║  ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("0.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("  Volver al Menú Principal                             ║");
+
+            Console.WriteLine("    ╚═══════════════════════════════════════════════════════════╝");
+
+            // Añade una pequeña animación de íconos
+            string[] iconos = { "👤", "📝", "💾", "🔍" };
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < iconos.Length; j++)
+                {
+                    Console.SetCursorPosition(22 + j * 3, 27);
+                    Console.Write(iconos[j]);
+                    Thread.Sleep(200);
+                }
+            }
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.SetCursorPosition(0, 30);
+            Console.Write("\n    Selecciona una opción: ");
+            Console.ForegroundColor = ConsoleColor.White;
             while (true)
             {
                 ConsoleKeyInfo KeyPressed = Console.ReadKey();
