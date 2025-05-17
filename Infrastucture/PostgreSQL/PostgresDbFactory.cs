@@ -40,4 +40,12 @@ public class PostgresDbFactory : IDbFactory
     {
         return new ImpInteresesRepository(_connectionString);
     }
+    public IMatchRepository CreateMatchRepository()
+    {
+        return new ImpMatchRepository(_connectionString);
+    }
+    public IInteraccionRepository CreateInteraccionRepository()
+    {
+        return new ImpInteraccionRepository(_connectionString);
+    }
 }

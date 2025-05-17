@@ -116,55 +116,5 @@ public class ImpUserRepository : IGenericRepository<Usuario>, IUserRepository
         }
         return null!;
     }
-
-    public void TinderIniciar(int id)
-    {
-        var connection = _conexion.ObtenerConexion();
-        var interacciones = new List<(int idDestino, string tipo)>();
-
-        string query = "SELECT id_usuario, nombre, edad, frase_perfil FROM usuarios WHERE id_usuario != @id";
-        using var cmd = new NpgsqlCommand(query, connection);
-        cmd.Parameters.AddWithValue("@id", id);
-
-        using var reader = cmd.ExecuteReader();
-
-        while (reader.Read())
-        {
-            int idDestino = reader.GetInt32(0);
-            string nombre = reader.GetString(1);
-            int edad = reader.GetInt32(2);
-            string frase = reader.GetString(3);
-
-            Console.Clear();
-            Console.WriteLine($"👤 Nombre: {nombre}");
-            Console.WriteLine($"🎂 Edad: {edad}");
-            Console.WriteLine($"💬 Frase: \"{frase}\"\n");
-
-            Console.Write("¿Qué deseas hacer? [l]ike | [d]islike | [s]alir: ");
-            var opcion = Console.ReadLine();
-
-            if (opcion == "s")
-                break;
-
-            if (opcion == "l" || opcion == "d")
-            {
-                interacciones.Add((idDestino, opcion == "l" ? "like" : "dislike"));
-            }
-        }
-
-        reader.Close();
-
-        foreach (var interaccion in interacciones)
-        {
-            using var insertCmd = new NpgsqlCommand("INSERT INTO interacciones (id_origen, id_destino, tipo) VALUES (@origen, @destino, @tipo)", connection);
-            insertCmd.Parameters.AddWithValue("@origen", id);
-            insertCmd.Parameters.AddWithValue("@destino", interaccion.idDestino);
-            insertCmd.Parameters.AddWithValue("@tipo", interaccion.tipo);
-            insertCmd.ExecuteNonQuery();
-        }
-
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine($"\n✅ Se registraron {interacciones.Count} interacciones.");
-    }
 }
 

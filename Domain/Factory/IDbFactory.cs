@@ -14,4 +14,6 @@ public interface IDbFactory
     ISesionRepository CreateSesionRepository();
     ICarreraRepository CreateCarreraRepository();
     IInteresesRepository CreateInteresRepository();
+    IMatchRepository CreateMatchRepository();
+    IInteraccionRepository CreateInteraccionRepository();
 }

@@ -18,6 +18,9 @@ public class UiMenu
         var servicioEstadisticas = new EstadisticasService(factory.CreateEstadisticasRepository());
         var servicioSesion = new SesionService(factory.CreateSesionRepository());
         var servicioUsuario = new UsuarioService(factory.CreateUserRepository());
+        var servicioMatch = new MatchService(factory.CreateMatchRepository());
+        var servicioInteracciones = new InteraccionService(factory.CreateInteraccionRepository());
+
         servicioSesion.AbrirSesion(usuario.IdUsuario);
         while (true)
         {
@@ -29,6 +32,118 @@ public class UiMenu
             switch (keyPressed.KeyChar)
             {
                 case '1':
+                    List<Usuario> usuarios = servicioUsuario.ObtenerUsuariosTinder();
+                    int indiceActual = 0;
+                    bool salir = false;
+                    while (!salir && indiceActual < usuarios.Count)
+                    {
+                        Console.Clear();
+                        var usuarioActual = usuarios[indiceActual];
+
+                        string genero = "";
+                        switch (usuarioActual.IdGenero)
+                        {
+                            case 1:
+                                genero = "Masculino";
+                                break;
+                            case 2:
+                                genero = "Femenino";
+                                break;
+                        }
+                        if (usuarioActual.IdUsuario == usuario.IdUsuario)
+                        {
+                            indiceActual++;
+                            if (indiceActual >= usuarios.Count)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("¡Has visto todos los perfiles disponibles!");
+                                Console.WriteLine("Presiona cualquier tecla para volver al menú principal...");
+                                Console.ReadKey();
+                                salir = true;
+                            }
+                            continue; // Salta a la siguiente iteración del bucle
+                        }
+                        else
+                        {
+                            bool yaDioLike = servicioEstadisticas.VerificarLike(usuario.IdUsuario, usuarioActual.IdUsuario);
+                            string estadoLike = yaDioLike ? "❤️ Ya le diste like" : "";
+                            Console.WriteLine("╔══════════════════════════════════════╗");
+                            Console.WriteLine($"║ ID: {usuarioActual.IdUsuario}                             ║");
+                            Console.WriteLine($"║ {usuarioActual.Nombre}, {usuarioActual.Edad}                          ║");
+                            Console.WriteLine($"║ Género: {genero}                         ║");
+                            Console.WriteLine("╠══════════════════════════════════════╣");
+                            Console.WriteLine($"║ {usuarioActual.FrasePerfil!.PadRight(38)}║");
+                            Console.WriteLine("╚══════════════════════════════════════╝");
+                            Console.WriteLine(estadoLike);
+
+                            Console.WriteLine("\nOpciones:");
+
+                            if (yaDioLike)
+                            {
+                                Console.WriteLine("1 - Ya diste like (no disponible)");
+                            }
+                            else
+                            {
+                                Console.WriteLine("1 - Me gusta (Like)");
+                            }
+                            Console.WriteLine("2 - No me gusta (Dislike)");
+                            Console.WriteLine("0 - Salir");
+                            Console.Write("\nTu elección: ");
+
+                            ConsoleKeyInfo input = Console.ReadKey();
+
+                            switch (input.KeyChar)
+                            {
+                                case '1':
+                                    if (!yaDioLike)
+                                    {
+                                        // Actualizar contador de likes
+                                        servicioEstadisticas.ActualizarLikes(usuarioActual, 1);
+
+                                        // Registrar interacción
+                                        servicioInteracciones.CrearInteraccion(usuario, usuarioActual, 1);
+
+                                        Console.WriteLine("¡Has dado like!");
+
+                                        // Verificar si hay match
+                                        if (servicioEstadisticas.VerificarLike(usuarioActual.IdUsuario, usuario.IdUsuario))
+                                        {
+                                            Console.WriteLine("");
+                                            Console.WriteLine("¡ES UN MATCH! 🎉");
+                                            Console.WriteLine("¡Has hecho match con " + usuarioActual.Nombre + "!");
+                                            servicioMatch.CreateMatch(usuario, usuarioActual);
+                                            Thread.Sleep(3000);
+                                        }
+                                        
+                                    }
+                                    indiceActual++;
+                                    break;
+                                case '2':
+                                    servicioEstadisticas.ActualizarDislikes(usuarioActual, 1);
+                                    servicioInteracciones.CrearInteraccion(usuario, usuarioActual, 2);
+                                    Console.WriteLine("Has dado dislike");
+                                    Thread.Sleep(1000);
+                                    indiceActual++;
+                                    break;
+                                case '0':
+                                    salir = true;
+                                    break;
+                                default:
+                                    Console.WriteLine("Opción no válida. Intenta de nuevo.");
+                                    Thread.Sleep(1000);
+                                    break;
+                            }
+
+                            if (indiceActual >= usuarios.Count && !salir)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("¡Has visto todos los perfiles disponibles!");
+                                Console.WriteLine("Presiona cualquier tecla para volver al menú principal...");
+                                Console.ReadKey();
+                                salir = true;
+                            }
+                        }
+                    }
                     break;
                 case '2':
                     Console.Clear();
@@ -67,7 +182,7 @@ public class UiMenu
                     break;
                 case '0':
                     servicioSesion.CerrarSesion(usuario.IdUsuario);
-                    Environment.Exit(0);
+                    UiMainMenu.MainMenu();
                     break;
             }
         }

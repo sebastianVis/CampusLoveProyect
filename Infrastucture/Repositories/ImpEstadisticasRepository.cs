@@ -86,7 +86,17 @@ public class ImpEstadisticasRepository : IGenericRepository<Usuario>, IEstadisti
         cmd.Parameters.AddWithValue("@id", id);
         cmd.ExecuteNonQuery();
     }
-
+    
+    public bool VerificarLike(int idUsuarioActual, int idUsuarioDestino)
+{
+    var connection = _conexion.ObtenerConexion();
+    string query = "SELECT COUNT(*) FROM interacciones i INNER JOIN tipo_interaccion t ON i.id_tipo_interaccion = t.id_tipo_interaccion WHERE i.id_usuario_emisor = @idOrigen AND i.id_usuario_receptor = @idDestino AND t.interaccion = 'LIKE'";
+    using var cmd = new NpgsqlCommand(query, connection);
+    cmd.Parameters.AddWithValue("@idOrigen", idUsuarioActual);
+    cmd.Parameters.AddWithValue("@idDestino", idUsuarioDestino);
+    int count = Convert.ToInt32(cmd.ExecuteScalar());
+    return count > 0;
+}
     public List<Usuario> Obtener()
     {
         throw new NotImplementedException();

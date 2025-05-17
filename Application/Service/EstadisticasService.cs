@@ -40,4 +40,9 @@ public class EstadisticasService
     {
         _repo.Eliminar(id);
     }
+
+    public bool VerificarLike(int idUsuarioActual, int idUsuarioDestino)
+    {
+        return _repo.VerificarLike(idUsuarioActual, idUsuarioDestino);
+    }
 }

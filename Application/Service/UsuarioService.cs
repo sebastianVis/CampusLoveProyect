@@ -30,10 +30,10 @@ public class UsuarioService
             {
                 case 1:
                     genero = "Masculino";
-                    return;
+                    break;
                 case 2:
                     genero = "Femenino";
-                    return;
+                    break;
             }
             Console.WriteLine($"Id: {a.IdUsuario}, Nombre: {a.Nombre}, Edad: {a.Edad}, \nGenero: {genero}");
         }
@@ -67,8 +67,23 @@ public class UsuarioService
         return _repo.ObtenerId(entity);
     }
 
-    // public void IniciarTinder(int id)
-    // {
-    //     return _repo.TinderIniciar(id);
-    // }
+    public List<Usuario> ObtenerUsuariosTinder()
+    {
+        var lista = _repo.Obtener();
+    foreach (var a in lista)
+    {
+        string genero = "";
+        switch (a.IdGenero)
+        {
+            case 1:
+                genero = "Masculino";
+                break;
+            case 2:
+                genero = "Femenino";
+                break;
+        }
+        Console.WriteLine($"Id: {a.IdUsuario}, Nombre: {a.Nombre}, Edad: {a.Edad}, \nGenero: {genero}");
+    }
+    return lista;
+    }
 }
