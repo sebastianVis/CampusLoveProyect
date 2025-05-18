@@ -20,14 +20,94 @@ public class UiMenu
         var servicioUsuario = new UsuarioService(factory.CreateUserRepository());
         var servicioMatch = new MatchService(factory.CreateMatchRepository());
         var servicioInteracciones = new InteraccionService(factory.CreateInteraccionRepository());
+        var interesService = new InteresService(factory.CreateInteresRepository());
+        var carreraService = new CarreraService(factory.CreateCarreraRepository());
 
         servicioSesion.AbrirSesion(usuario.IdUsuario);
         while (true)
         {
             Console.Clear();
-            Console.WriteLine($"\t\t-- BIENVENIDO {usuario.Nombre} --");
-            Console.WriteLine("\n\t1. Interactuar\t\t2. Ver estadisticas\n\t3. Editar informacion\t4. Editar usuario/contraseña\n\t0. Cerrar sesión");
-            Console.Write("\nOpción: ");
+            Console.BackgroundColor = ConsoleColor.Black;
+
+            // Cabecera más pequeña
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("    ╔═══════════════════════════════════════════════════════╗");
+
+            string bienvenida = $"¡BIENVENIDO/A {usuario.Nombre!.ToUpper()}!";
+            int espaciosBienvenida = (49 - bienvenida.Length) / 2;
+            Console.Write($"    ║{new string(' ', espaciosBienvenida)}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(bienvenida);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine($"{new string(' ', 49 - bienvenida.Length - espaciosBienvenida)}║");
+
+            Console.WriteLine("    ╚═══════════════════════════════════════════════════════╝");
+
+            // Logo compacto de Campus Love
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("    ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine("    ║            CAMPUS LOVE - MENU PRINCIPAL               ║");
+            Console.WriteLine("    ╚═══════════════════════════════════════════════════════╝");
+
+            // Menú principal más compacto
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("    ╔═══════════════════════════════════════════════════════╗");
+
+            // Opciones en una columna para mayor compacidad
+            Console.Write("    ║  ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("1.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" Interactuar con Usuarios                         ║");
+
+            Console.Write("    ║  ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("2.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" Ver mis Estadísticas                             ║");
+
+            Console.Write("    ║  ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("3.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" Editar mi Información                            ║");
+
+            Console.Write("    ║  ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("4.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" Cambiar Usuario/Contraseña                       ║");
+
+            Console.Write("    ║  ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("0.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" Cerrar Sesión                                    ║");
+
+            Console.WriteLine("    ╚═══════════════════════════════════════════════════════╝");
+
+            // Información del usuario en formato compacto
+            string Newgenero = usuario.IdGenero == 1 ? "Masculino" : "Femenino";
+
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("\n    Perfil: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write($"{usuario.Edad} años, ");
+            Console.Write($"{Newgenero}");
+
+            if (!string.IsNullOrEmpty(usuario.FrasePerfil))
+            {
+                // Recortar la frase si es muy larga
+                string frase = usuario.FrasePerfil.Length > 40
+                    ? usuario.FrasePerfil.Substring(0, 37) + "..."
+                    : usuario.FrasePerfil;
+                Console.WriteLine($"\n    \"{frase}\"");
+            }
+
+            // Solicitud de opción (sin animación para mayor velocidad)
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("\n    Selecciona una opción: ");
+            Console.ForegroundColor = ConsoleColor.White;
             ConsoleKeyInfo keyPressed = Console.ReadKey();
             switch (keyPressed.KeyChar)
             {
@@ -74,6 +154,12 @@ public class UiMenu
                             Console.WriteLine("╠══════════════════════════════════════╣");
                             Console.WriteLine($"║ {usuarioActual.FrasePerfil!.PadRight(38)}║");
                             Console.WriteLine("╚══════════════════════════════════════╝");
+                            Console.WriteLine("╠══════════════════════════════════════╣");
+                            Console.WriteLine($"║ Interes: {interesService.NombreInteres(usuarioActual)!.PadRight(38)}║");
+                            Console.WriteLine("╚══════════════════════════════════════╝");
+                            Console.WriteLine("╠══════════════════════════════════════╣");
+                            Console.WriteLine($"║ Carrera: {carreraService.NombreCarrera(usuarioActual)!.PadRight(38)}║");
+                            Console.WriteLine("╚══════════════════════════════════════╝");
                             Console.WriteLine(estadoLike);
 
                             Console.WriteLine("\nOpciones:");
@@ -114,7 +200,7 @@ public class UiMenu
                                             servicioMatch.CreateMatch(usuario, usuarioActual);
                                             Thread.Sleep(3000);
                                         }
-                                        
+
                                     }
                                     indiceActual++;
                                     break;
@@ -188,4 +274,6 @@ public class UiMenu
         }
 
     }
+
+
 }

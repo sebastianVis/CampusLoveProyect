@@ -36,7 +36,6 @@ CREATE TABLE carrera (
     nombre VARCHAR(50) UNIQUE
 );
 
--- Tabla usuarios
 CREATE TABLE usuarios (
     id_usuario SERIAL,
     nombre VARCHAR(50),
@@ -67,7 +66,6 @@ CREATE TABLE sesiones_usuario (
     fecha_inicio TIMESTAMP,
     fecha_fin TIMESTAMP
 );
-
 
 CREATE TABLE tipo_interaccion (
     id_tipo_interaccion SERIAL PRIMARY KEY,

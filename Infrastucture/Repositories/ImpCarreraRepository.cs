@@ -48,7 +48,7 @@ public class ImpCarreraRepository : IGenericRepository<Carrera>, ICarreraReposit
     public void Actualizar(Carrera entity)
     {
         var connection = _conexion.ObtenerConexion();
-        string query = "UPDATE FROM carrera SET nombre = @nombre WHERE id = @id";
+        string query = "UPDATE FROM carrera SET nombre = @nombre WHERE id_carrera = @id";
         using var cmd = new NpgsqlCommand(query, connection);
         cmd.Parameters.AddWithValue("@nombre", entity.Nombre!);
         cmd.Parameters.AddWithValue("@id", entity.IdCarrera!);
@@ -58,9 +58,34 @@ public class ImpCarreraRepository : IGenericRepository<Carrera>, ICarreraReposit
     public void Eliminar(int id)
     {
         var connection = _conexion.ObtenerConexion();
-        string query = "DELETE FROM carrera WHERE id = @id";
+        string query = "DELETE FROM carrera WHERE id_carrera = @id";
         using var cmd = new NpgsqlCommand(query, connection);
         cmd.Parameters.AddWithValue("@id", id);
         cmd.ExecuteNonQuery();
+    }
+
+    public void AgregarCarrera(Usuario usuario, int id)
+    {
+        var connection = _conexion.ObtenerConexion();
+        string query = "INSERT INTO usuario_carrera(id_carrera, id_usuario) VALUES (@id, @idusuario)";
+        using var cmd = new NpgsqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@idusuario", usuario.IdUsuario!);
+        cmd.Parameters.AddWithValue("@id", id);
+        cmd.ExecuteNonQuery();
+    }
+
+    public string NombreCarrera(Usuario entity)
+    {
+        var connection = _conexion.ObtenerConexion();
+        string query = "SELECT c.nombre FROM usuario_carrera uc INNER JOIN carrera c ON uc.id_carrera = c.id_carrera WHERE uc.id_usuario = @id;";
+        using var cmd = new NpgsqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@id", entity.IdUsuario);
+        using var reader = cmd.ExecuteReader();
+        if (reader.Read())
+        {
+            return reader.GetString(0);
+        }
+
+        return null!;
     }
 }
