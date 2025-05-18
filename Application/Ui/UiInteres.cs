@@ -100,7 +100,7 @@ public class UiInteres
                     Console.Clear();
                     Intereses actualizar = new Intereses();
                     Console.WriteLine("Intereses disponibles: ");
-                    servicioInteres.ObtenerInteresess();
+                    servicioInteres.ObtenerIntereses();
                     Console.Write("Opción a actualizar: ");
                     actualizar.IdInteres = int.Parse(Console.ReadLine()!);
                     Console.Write("\nNuevo nombre: ");
@@ -111,14 +111,14 @@ public class UiInteres
                 case '3':
                     Console.Clear();
                     Console.WriteLine("Intereses disponibles: ");
-                    servicioInteres.ObtenerInteresess();
+                    servicioInteres.ObtenerIntereses();
                     Console.Write("Opción a Eliminar: ");
                     int idE = int.Parse(Console.ReadLine()!);
                     servicioInteres.EliminarIntereses(idE);
                     MenuInteres();
                     return;
                 case '4':
-                    servicioInteres.ObtenerInteresess();
+                    servicioInteres.ObtenerIntereses();
                     Console.WriteLine("Escriba cualquier tecla para continuar.");
                     Console.ReadKey();
                     MenuInteres();

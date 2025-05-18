@@ -20,6 +20,8 @@ public class UiMenu
         var servicioUsuario = new UsuarioService(factory.CreateUserRepository());
         var servicioMatch = new MatchService(factory.CreateMatchRepository());
         var servicioInteracciones = new InteraccionService(factory.CreateInteraccionRepository());
+        var interesService = new InteresService(factory.CreateInteresRepository());
+        var carreraService = new CarreraService(factory.CreateCarreraRepository());
 
         servicioSesion.AbrirSesion(usuario.IdUsuario);
         while (true)
@@ -151,6 +153,12 @@ public class UiMenu
                             Console.WriteLine($"║ Género: {genero}                         ║");
                             Console.WriteLine("╠══════════════════════════════════════╣");
                             Console.WriteLine($"║ {usuarioActual.FrasePerfil!.PadRight(38)}║");
+                            Console.WriteLine("╚══════════════════════════════════════╝");
+                            Console.WriteLine("╠══════════════════════════════════════╣");
+                            Console.WriteLine($"║ Interes: {interesService.NombreInteres(usuarioActual)!.PadRight(38)}║");
+                            Console.WriteLine("╚══════════════════════════════════════╝");
+                            Console.WriteLine("╠══════════════════════════════════════╣");
+                            Console.WriteLine($"║ Carrera: {carreraService.NombreCarrera(usuarioActual)!.PadRight(38)}║");
                             Console.WriteLine("╚══════════════════════════════════════╝");
                             Console.WriteLine(estadoLike);
 

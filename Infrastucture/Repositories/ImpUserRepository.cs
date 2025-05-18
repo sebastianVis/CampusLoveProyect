@@ -118,5 +118,26 @@ public class ImpUserRepository : IGenericRepository<Usuario>, IUserRepository
         }
         return null!;
     }
+
+    public void AddUsuarioCarrera(Usuario entity, int idCarrera)
+    {
+        var connection = _conexion.ObtenerConexion();
+        string query = "INSERT INTO usuario_carrera(id_carrera, id_usuario) VALUES (@idcarrera, @idusuario)";
+        using var cmd = new NpgsqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@idcarrera", idCarrera!);
+        cmd.Parameters.AddWithValue("@idusuario", entity.IdUsuario!);
+        cmd.ExecuteNonQuery();
+    }
+
+    public void AddUsuarioInteres(Usuario entity, int idInteres)
+    {
+        var connection = _conexion.ObtenerConexion();
+        string query = "INSERT INTO usuario_interes(id_usuario, id_interes) VALUES (@idusuario, @idinteres)";
+        using var cmd = new NpgsqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@idinteres", idInteres!);
+        cmd.Parameters.AddWithValue("@idusuario", entity.IdUsuario!);
+        cmd.ExecuteNonQuery();
+
+    }
 }
 

@@ -8,6 +8,6 @@ namespace CampusLove.Domain.Ports
 {
     public interface IInteresesRepository : IGenericRepository<Intereses>
     {
-        
+        string NombreInteres(Usuario entity);
     }
 }

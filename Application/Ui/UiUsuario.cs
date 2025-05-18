@@ -17,6 +17,8 @@ public class UiUsuario
         IDbFactory factory = new PostgresDbFactory(DbParameters.Parameters);
         var servicioUsuario = new UsuarioService(factory.CreateUserRepository());
         var servicioEstadisticas = new EstadisticasService(factory.CreateEstadisticasRepository());
+        var interesService = new InteresService(factory.CreateInteresRepository());
+        var carreraService = new CarreraService(factory.CreateCarreraRepository());
         while (true)
         {
             Console.Clear();
@@ -142,6 +144,19 @@ public class UiUsuario
                     servicioUsuario.CrearUsuario(usuario);
                     Usuario newUser = servicioUsuario.ObtenerId(usuario);
                     servicioEstadisticas.CrearEntidad(newUser);
+
+                    Console.WriteLine("Carreras disponibles: ");
+                    carreraService.ObtenerCarreras();
+                    Console.Write("Ingrese id de la carrera: ");
+                    int idC = int.Parse(Console.ReadLine()!);
+                    servicioUsuario.AddUsuarioCarrera(newUser, idC);
+
+                    Console.WriteLine("Intereses disponibles: ");
+                    interesService.ObtenerIntereses();
+                    Console.Write("Ingrese id del interés: ");
+                    int idI = int.Parse(Console.ReadLine()!);
+                    servicioUsuario.AddUsuarioInteres(newUser, idI);
+
                     Console.WriteLine("\n✅ Usuario registrado correctamente.");
                     Console.WriteLine("\nPresione Enter para volver al menú.");
                     Console.ReadKey();

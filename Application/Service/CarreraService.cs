@@ -50,4 +50,8 @@ public class CarreraService
     {
         _repo.Actualizar(carrera);
     }
+    public string NombreCarrera(Usuario usuario)
+        {
+            return _repo.NombreCarrera(usuario);
+        }
 }

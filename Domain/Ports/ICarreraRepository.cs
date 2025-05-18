@@ -9,5 +9,6 @@ namespace CampusLove.Domain.Ports
     public interface ICarreraRepository : IGenericRepository<Carrera>
     {
         void AgregarCarrera(Usuario usuario, int idCarrera);
+        string NombreCarrera(Usuario usuario);
     }
 }

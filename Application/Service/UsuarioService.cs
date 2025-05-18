@@ -108,4 +108,14 @@ public class UsuarioService
         }
         return lista;
     }
+
+    public void AddUsuarioCarrera(Usuario entity, int idCarrera)
+    {
+        _repo.AddUsuarioCarrera(entity, idCarrera);
+    }
+
+    public void AddUsuarioInteres(Usuario entity, int idInteres)
+    {
+        _repo.AddUsuarioInteres(entity, idInteres);
+    }
 }

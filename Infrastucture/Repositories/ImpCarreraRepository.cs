@@ -73,4 +73,19 @@ public class ImpCarreraRepository : IGenericRepository<Carrera>, ICarreraReposit
         cmd.Parameters.AddWithValue("@id", id);
         cmd.ExecuteNonQuery();
     }
+
+    public string NombreCarrera(Usuario entity)
+    {
+        var connection = _conexion.ObtenerConexion();
+        string query = "SELECT c.nombre FROM usuario_carrera uc INNER JOIN carrera c ON uc.id_carrera = c.id_carrera WHERE uc.id_usuario = @id;";
+        using var cmd = new NpgsqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@id", entity.IdUsuario);
+        using var reader = cmd.ExecuteReader();
+        if (reader.Read())
+        {
+            return reader.GetString(0);
+        }
+
+        return null!;
+    }
 }
