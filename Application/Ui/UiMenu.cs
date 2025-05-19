@@ -22,6 +22,7 @@ public class UiMenu
         var servicioInteracciones = new InteraccionService(factory.CreateInteraccionRepository());
         var interesService = new InteresService(factory.CreateInteresRepository());
         var carreraService = new CarreraService(factory.CreateCarreraRepository());
+        var creditosService = new CreditosService(factory.CreateCreditRepository());
 
         servicioSesion.AbrirSesion(usuario.IdUsuario);
         while (true)
@@ -113,6 +114,17 @@ public class UiMenu
             {
                 case '1':
                     List<Usuario> usuarios = servicioUsuario.ObtenerUsuariosTinder();
+
+                    if (creditosService.ObtenerCreditos(usuario) <= 0)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("¡No tienes créditos disponibles para continuar!");
+                        Console.WriteLine("Adquiere más créditos para seguir interactuando.");
+                        Console.WriteLine("Presiona cualquier tecla para volver al menú principal...");
+                        Console.ReadKey();
+                        return;
+                    }
+
                     int indiceActual = 0;
                     bool salir = false;
                     while (!salir && indiceActual < usuarios.Count)
@@ -190,6 +202,7 @@ public class UiMenu
                                         servicioInteracciones.CrearInteraccion(usuario, usuarioActual, 1);
 
                                         Console.WriteLine("¡Has dado like!");
+                                        creditosService.QuitarCreditos(usuario);
 
                                         // Verificar si hay match
                                         if (servicioEstadisticas.VerificarLike(usuarioActual.IdUsuario, usuario.IdUsuario))
@@ -208,6 +221,7 @@ public class UiMenu
                                     servicioEstadisticas.ActualizarDislikes(usuarioActual, 1);
                                     servicioInteracciones.CrearInteraccion(usuario, usuarioActual, 2);
                                     Console.WriteLine("Has dado dislike");
+                                    creditosService.QuitarCreditos(usuario);
                                     Thread.Sleep(1000);
                                     indiceActual++;
                                     break;

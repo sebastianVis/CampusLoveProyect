@@ -48,4 +48,9 @@ public class PostgresDbFactory : IDbFactory
     {
         return new ImpInteraccionRepository(_connectionString);
     }
+
+    public ICreditRepository CreateCreditRepository()
+    {
+        return new ImpCreditRepository(_connectionString);
+    }
 }

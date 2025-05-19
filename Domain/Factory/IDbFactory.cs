@@ -16,4 +16,5 @@ public interface IDbFactory
     IInteresesRepository CreateInteresRepository();
     IMatchRepository CreateMatchRepository();
     IInteraccionRepository CreateInteraccionRepository();
+    ICreditRepository CreateCreditRepository();
 }

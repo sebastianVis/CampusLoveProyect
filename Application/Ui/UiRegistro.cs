@@ -21,6 +21,8 @@ public class UiRegistro
         var SesionService = new SesionService(factory.CreateSesionRepository());
         var interesService = new InteresService(factory.CreateInteresRepository());
         var carreraService = new CarreraService(factory.CreateCarreraRepository());
+        var creditService = new CreditosService(factory.CreateCreditRepository());
+
         while (true)
         {
             Console.Clear();
@@ -166,7 +168,8 @@ public class UiRegistro
                         int idI = int.Parse(Console.ReadLine()!);
                         servicioUsuario.AddUsuarioInteres(newUser, idI);
 
-                        
+                        creditService.CrearCreditosUsuario(newUser);
+
                         Console.WriteLine("\n✅ Usuario registrado correctamente.");
                         Console.WriteLine("\nPresione Enter para volver al menú.");
                         Console.ReadKey();

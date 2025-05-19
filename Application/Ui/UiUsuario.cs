@@ -19,6 +19,8 @@ public class UiUsuario
         var servicioEstadisticas = new EstadisticasService(factory.CreateEstadisticasRepository());
         var interesService = new InteresService(factory.CreateInteresRepository());
         var carreraService = new CarreraService(factory.CreateCarreraRepository());
+        var creditService = new CreditosService(factory.CreateCreditRepository());
+
         while (true)
         {
             Console.Clear();
@@ -55,7 +57,7 @@ public class UiUsuario
 
             Console.Write("    ║  ");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("3.");
+            Console.Write("2.");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(" ❌ Eliminar Usuario                              ║");
 
@@ -63,9 +65,17 @@ public class UiUsuario
 
             Console.Write("    ║  ");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("4.");
+            Console.Write("3.");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(" 📋 Ver Lista de Usuarios                         ║");
+
+            Console.WriteLine("    ║                                                       ║");
+
+            Console.Write("    ║  ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("4.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" 📋 Agregar creditos a usuario                         ║");
 
             Console.WriteLine("    ║                                                       ║");
 
@@ -157,6 +167,8 @@ public class UiUsuario
                     int idI = int.Parse(Console.ReadLine()!);
                     servicioUsuario.AddUsuarioInteres(newUser, idI);
 
+                    creditService.CrearCreditosUsuario(newUser);
+
                     Console.WriteLine("\n✅ Usuario registrado correctamente.");
                     Console.WriteLine("\nPresione Enter para volver al menú.");
                     Console.ReadKey();
@@ -175,6 +187,18 @@ public class UiUsuario
                     int idE = int.Parse(Console.ReadLine()!);
                     servicioUsuario.EliminarUsuario(idE);
                     MenuUsuario();
+                    return;
+                case '4':
+                    Console.Clear();
+                    Usuario usuarioAgregar = new Usuario();
+                    Console.WriteLine("Usuarios disponibles: ");
+                    servicioUsuario.ObtenerUsuarios();
+                    Console.Write("Opción a agregar creditos: ");
+                    usuarioAgregar.IdUsuario = int.Parse(Console.ReadLine()!);
+                    creditService.AgregarCreditos(usuarioAgregar);
+                    Console.WriteLine($"El usuario ahora tiene {creditService.ObtenerCreditos(usuarioAgregar)} creditos.");
+                    Console.Write("Ingrese cualquier tecla para continuar");
+                    Console.ReadKey();
                     return;
                 case '0':
                     UiAdminMenu.MenuAdmin();
